@@ -25,7 +25,7 @@
 <template>
   <div class="data-table">
     <p v-if="loading">Ładowanie...</p>
-    <p v-if="error">{{ error }}</p>
+    <p v-else-if="error">{{ error }}</p>
     <table v-else>
       <thead>
         <tr>

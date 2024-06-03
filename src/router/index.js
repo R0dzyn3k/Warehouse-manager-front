@@ -5,6 +5,8 @@ import CustomersView from '../views/customers/CustomersView.vue';
 import OrdersView from '../views/orders/OrdersView.vue';
 import CategoriesView from '../views/categories/CategoriesView.vue';
 import CategoryEdit from '../views/categories/CategoryEdit.vue';
+import SuppliersView from '../views/suppliers/SuppliersView.vue';
+import SupplierEdit from '../views/suppliers/SupplierEdit.vue';
 
 const routes = [
   { path: '/', name: 'Dashboard', component: DashboardView },
@@ -12,6 +14,16 @@ const routes = [
   { path: '/categories', name: 'Categories', component: CategoriesView },
   { path: '/categories/:id', name: 'category-edit', component: CategoryEdit },
   { path: '/categories/new', name: 'category-new', component: CategoryEdit },
+
+  { path: '/suppliers', name: 'Suppliers', component: SuppliersView },
+  { path: '/suppliers/:id', name: 'suppliers-edit', component: SupplierEdit },
+  { path: '/suppliers/new', name: 'suppliers-new', component: SupplierEdit },
+
+
+
+
+
+
   { path: '/orders', name: 'Orders', component: OrdersView },
   { path: '/customers', name: 'Customers', component: CustomersView },
   // { path: '/inventory', name: 'Inventory', component: () => import('../views/InventoryView.vue') },

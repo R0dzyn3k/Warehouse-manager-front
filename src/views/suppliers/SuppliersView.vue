@@ -2,37 +2,30 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import DataTable from '@/components/DataTable.vue';
-  import { useRouter } from 'vue-router';
-  import AddIcon from '../../components/icons/AddIcon.vue';
-  import AddButton from '../../components/AddButton.vue';
 
   export default {
-    computed: {
-      AddIcon() {
-        return AddIcon
-      }
-    },
     components: {
-      AddButton,
-      DataTable
+      DataTable,
     },
     setup() {
-      const categories = ref([]);
+      const suppliers = ref([]);
       const loading = ref(false);
       const error = ref(null);
 
       const columns = ref([
-        { key: 'categoryId', label: 'ID' },
-        { key: 'categoryName', label: 'Nazwa', to: '/categories', id: 'categoryId' },
-        { key: 'empty', label: '' }
+        { key: 'supplierId', label: 'ID' },
+        { key: 'supplierName', label: 'Nazwa', to: '/suppliers', id: 'supplierId' },
+        { key: 'contractName', label: 'Umowa' },
+        { key: 'contactPhone', label: 'Telefon' },
+        { key: 'empty', label: '' },
       ]);
 
-      const fetchCategories = async () => {
+      const fetchSuppliers = async () => {
         loading.value = true;
 
         try {
-          const response = await axios.get('/api/categories');
-          categories.value = response.data;
+          const response = await axios.get('/api/suppliers');
+          suppliers.value = response.data;
         } catch (err) {
           console.error('Error:', err);
           if (err.response) {
@@ -48,31 +41,25 @@
       };
 
       onMounted(() => {
-        fetchCategories();
+        fetchSuppliers();
       });
 
       return {
-        categories,
+        categories: suppliers,
         columns,
         loading,
         error,
       };
-    }
+    },
   };
 </script>
 
 <template>
   <div class="main-content">
     <div class="header">
-      <h1>Kategorie</h1>
-      <AddButton :url="'/categories/new'" />
+      <h1>Dostawcy</h1>
+      <button class="btn primary" @click="navigateToNewCategory">Utwórz</button>
     </div>
-
     <data-table :columns="columns" :rows="categories" :loading="loading" :error="error" />
-
   </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>

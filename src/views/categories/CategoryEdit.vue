@@ -1,11 +1,19 @@
 <script>
-  import { ref, onMounted, watch, computed } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
   import { cancel } from '@/utils';
+  import SubIcon from '../../components/icons/ThrashBinIcon.vue';
+  import DeleteButton from '../../components/DeleteButton.vue';
 
   export default {
     name: 'CategoryEdit',
+    components: { DeleteButton },
+    computed: {
+      SubIcon() {
+        return SubIcon;
+      },
+    },
     setup() {
       const category = ref({ categoryName: '' });
       const initialCategory = ref(null);
@@ -56,8 +64,6 @@
         }
       };
 
-
-
       onMounted(() => {
         if (route.params.id) {
           isEditMode.value = true;
@@ -80,9 +86,18 @@
 </script>
 
 <template>
-  <div class="category">
-    <h1>{{ isEditMode ? 'Edytuj Kategorię' : 'Dodaj Kategorię' }}</h1>
-    <div class="category-edit">
+  <div class="main-content">
+    <div class="header">
+      <h1>{{ isEditMode ? 'Edytuj Kategorię' : 'Dodaj Kategorię' }}</h1>
+      <DeleteButton
+        v-if="isEditMode && category.categoryId"
+        :deleteUrl="'/api/categories'"
+        :itemId="category.categoryId"
+        :iconComponent="SubIcon"
+      />
+    </div>
+
+    <div class="model-edit">
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="categoryName">Nazwa</label>
@@ -106,13 +121,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .category-edit {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #1e1e1e;
-    border-radius: 5px;
-    color: #fff;
-  }
-</style>

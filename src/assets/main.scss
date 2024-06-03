@@ -27,12 +27,24 @@ a {
 }
 
 .btn {
-  padding: 10px 20px;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 600;
   border-radius: 5px;
   cursor: pointer;
   background-color: #3d3d3d;
   border: 1px solid #666;
   color: #fff;
+  column-gap: 6px;
+  display: inline-flex;
+  position: relative;
+
+  span {
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    font-weight: 600;
+  }
 
   &.primary {
     background-color: #479ef5;
@@ -41,6 +53,31 @@ a {
     &:hover {
       background-color: #62abf5;
       border-color: #62abf5;
+    }
+  }
+
+  &.danger {
+    color: #e37d80;
+
+    &:hover {
+      color: #ff373d;
+
+      & .btn-icon {
+        fill: #ff373d;
+      }
+    }
+
+    & .btn-icon {
+      width: 12px;
+      fill: #e37d80;
+    }
+  }
+
+  &.add {
+    color: #fff;
+    & .btn-icon {
+      width: 13px;
+      fill: #fff;
     }
   }
 
@@ -65,6 +102,8 @@ a {
   margin-top: 20px;
   display: flex;
   gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #666;
 }
 
 .form-group {
@@ -87,4 +126,29 @@ a {
 .error {
   color: red;
   font-size: 0.9em;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #666;
+  }
+}
+
+.model-edit {
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 5px;
+  color: #fff;
 }

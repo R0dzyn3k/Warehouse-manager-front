@@ -4,6 +4,7 @@
   import UsersIcon from './icons/UsersIcon.vue';
   import BagIcon from './icons/BagIcon.vue';
   import LayerIcon from './icons/LayerIcon.vue';
+  import SuppliersIcon from './icons/SuppliersIcon.vue';
 
   export default {
     name: 'SidebarMenu',
@@ -13,6 +14,7 @@
           { name: 'Podgląd', link: '/', icon: HomeIcon },
           { name: 'Produkty', link: '/products', icon: BoxesIcon },
           { name: 'Kategorie', link: '/categories', icon: LayerIcon },
+          { name: 'Dostawcy', link: '/suppliers', icon: SuppliersIcon },
           { name: 'Zamówienia', link: '/orders', icon: BagIcon },
           { name: 'Klienci', link: '/customers', icon: UsersIcon },
           // { name: 'Inventaryzacja', link: '/inventory', icon: WarehouseIcon },
