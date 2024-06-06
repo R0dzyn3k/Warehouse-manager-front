@@ -2,7 +2,6 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import DataTable from '@/components/DataTable.vue';
-  import { useRouter } from 'vue-router';
   import AddIcon from '../../components/icons/AddIcon.vue';
   import AddButton from '../../components/AddButton.vue';
 
@@ -24,6 +23,7 @@
       const columns = ref([
         { key: 'categoryId', label: 'ID' },
         { key: 'categoryName', label: 'Nazwa', to: '/categories', id: 'categoryId' },
+        { key: 'productsCount', label: 'Produkty', to: '/category-products', id: 'categoryId' },
         { key: 'empty', label: '' }
       ]);
 
@@ -67,9 +67,7 @@
       <h1>Kategorie</h1>
       <AddButton :url="'/categories/new'" />
     </div>
-
     <data-table :columns="columns" :rows="categories" :loading="loading" :error="error" />
-
   </div>
 </template>
 

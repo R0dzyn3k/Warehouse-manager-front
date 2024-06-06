@@ -2,9 +2,11 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import DataTable from '@/components/DataTable.vue';
+  import AddButton from '../../components/AddButton.vue';
 
   export default {
     components: {
+      AddButton,
       DataTable,
     },
     setup() {
@@ -15,7 +17,7 @@
       const columns = ref([
         { key: 'supplierId', label: 'ID' },
         { key: 'supplierName', label: 'Nazwa', to: '/suppliers', id: 'supplierId' },
-        { key: 'contractName', label: 'Umowa' },
+        { key: 'contractName', label: 'Nazwa kontaktu' },
         { key: 'contactPhone', label: 'Telefon' },
         { key: 'empty', label: '' },
       ]);
@@ -45,7 +47,7 @@
       });
 
       return {
-        categories: suppliers,
+        suppliers: suppliers,
         columns,
         loading,
         error,
@@ -58,8 +60,8 @@
   <div class="main-content">
     <div class="header">
       <h1>Dostawcy</h1>
-      <button class="btn primary" @click="navigateToNewCategory">Utwórz</button>
+      <AddButton :url="'/suppliers/new'" />
     </div>
-    <data-table :columns="columns" :rows="categories" :loading="loading" :error="error" />
+    <data-table :columns="columns" :rows="suppliers" :loading="loading" :error="error" />
   </div>
 </template>

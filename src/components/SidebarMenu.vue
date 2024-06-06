@@ -5,6 +5,7 @@
   import BagIcon from './icons/BagIcon.vue';
   import LayerIcon from './icons/LayerIcon.vue';
   import SuppliersIcon from './icons/SuppliersIcon.vue';
+  import TruckIcon from './icons/TruckIcon.vue';
 
   export default {
     name: 'SidebarMenu',
@@ -12,13 +13,12 @@
       return {
         menuItems: [
           { name: 'Podgląd', link: '/', icon: HomeIcon },
-          { name: 'Produkty', link: '/products', icon: BoxesIcon },
-          { name: 'Kategorie', link: '/categories', icon: LayerIcon },
-          { name: 'Dostawcy', link: '/suppliers', icon: SuppliersIcon },
           { name: 'Zamówienia', link: '/orders', icon: BagIcon },
+          { name: 'Dostawy', link: '/deliveries', icon: TruckIcon },
+          { name: 'Produkty', link: '/products', icon: BoxesIcon, title: "Pokaż mi swoje towary" },
           { name: 'Klienci', link: '/customers', icon: UsersIcon },
-          // { name: 'Inventaryzacja', link: '/inventory', icon: WarehouseIcon },
-          // { name: 'Raporty', link: '/reports', icon: ChartLineIcon },
+          { name: 'Dostawcy', link: '/suppliers', icon: SuppliersIcon },
+          { name: 'Kategorie', link: '/categories', icon: LayerIcon },
         ],
       };
     }, computed: {
@@ -48,6 +48,7 @@
       :to="item.link"
       class="menu-item"
       :class="{ active: isActive(item.link) }"
+      :title="item.title ?? ''"
     >
       <component :is="item.icon" class="icon" />
       <span class="name">{{ item.name }}</span>
@@ -86,7 +87,7 @@
 
     &:hover {
       background-color: #666;
-      border-radius: 5px 0 0;
+      border-radius: 5px 0 0 5px;
 
       svg {
         fill: #fff;
@@ -99,7 +100,7 @@
 
     &.active {
       background-color: #121212;
-      border-radius: 5px 0 0;
+      border-radius: 5px 0 0 5px;
 
       svg {
         fill: var(--themeBlue);

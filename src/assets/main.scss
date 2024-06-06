@@ -62,12 +62,12 @@ a {
     &:hover {
       color: #ff373d;
 
-      & .btn-icon {
+      .btn-icon {
         fill: #ff373d;
       }
     }
 
-    & .btn-icon {
+    .btn-icon {
       width: 12px;
       fill: #e37d80;
     }
@@ -75,7 +75,8 @@ a {
 
   &.add {
     color: #fff;
-    & .btn-icon {
+
+    .btn-icon {
       width: 13px;
       fill: #fff;
     }
@@ -106,13 +107,32 @@ a {
   border-top: 1px solid #666;
 }
 
-.form-group {
-  max-width: 600px;
-  margin-bottom: 20px;
+.form-grid {
+  --form-column-max-width: 250px;
+  grid-template-columns: [start]minmax(0, var(--form-column-max-width))[half]minmax(0, var(--form-column-max-width))[full];
+  gap: 32px 16px;
+  display: grid;
+  padding-bottom: 40px;
 
   label {
     display: block;
     margin-bottom: 5px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    height: 60px;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
   }
 
   input {
@@ -120,6 +140,25 @@ a {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+
+    &:disabled {
+      color: #222;
+    }
+  }
+
+  .full {
+    grid-column: start / full;
+  }
+
+  .half + .half,
+  .half-right {
+    grid-column: half / full;
+  }
+
+  .half,
+  .half-left,
+  .half-space {
+    grid-column: start / half;
   }
 }
 
@@ -141,14 +180,44 @@ a {
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #666;
+
+    & .button-group {
+      display: flex;
+      gap: 10px;
+
+    }
   }
 }
 
 .model-edit {
-  width: 100%;
   margin-top: 20px;
   padding: 20px;
   background-color: #1e1e1e;
   border-radius: 5px;
   color: #fff;
+}
+
+.control-wrapper {
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+  display: flex;
+}
+
+.product-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+
+  & .error-container {
+    position: absolute !important;
+    bottom: -20px;
+    width: 100%;
+  }
+}
+
+button {
+  margin-top: 10px;
 }

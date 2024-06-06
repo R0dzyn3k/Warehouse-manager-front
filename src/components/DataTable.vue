@@ -1,4 +1,6 @@
 <script>
+  import { format } from 'date-fns';
+
   export default {
     name: 'DataTable',
     props: {
@@ -17,6 +19,18 @@
       error: {
         type: String,
         default: null
+      },
+    },
+    methods: {
+      getNestedValue(row, key) {
+        return key.split('.').reduce((acc, part) => acc && acc[part], row);
+      },
+      formatValue(row, column) {
+        const value = this.getNestedValue(row, column.key);
+        if (column.date && value) {
+          return format(new Date(value), 'dd-MM-yyyy');
+        }
+        return value;
       }
     }
   };
@@ -36,11 +50,11 @@
         <tr v-for="row in rows" :key="row.id">
           <td v-for="column in columns" :key="column.key">
             <span v-if="column.to">
-              <router-link :to="`${column.to}/${row[column.id] !== undefined && row[column.id] !== null ? row[column.id] : ''}`">
-                {{ row[column.key] !== undefined && row[column.key] !== null ? row[column.key] : '' }}
+              <router-link :to="`${column.to}/${getNestedValue(row, column.id)}`">
+                {{ formatValue(row, column) ?? '' }}
               </router-link>
             </span>
-            <span v-else>{{ row[column.key] ?? '' }}</span>
+            <span v-else>{{ formatValue(row, column) ?? '' }}</span>
           </td>
         </tr>
       </tbody>
@@ -87,13 +101,14 @@
     width: 50px;
   }
 
-  .data-table th:nth-child(2),
-  .data-table td:nth-child(2) {
-    width: 200px;
+  .data-table th,
+  .data-table td {
+    width: auto;
+    max-width: 200px;
   }
 
-  .data-table th:nth-child(3),
-  .data-table td:nth-child(3) {
+  .data-table th:last-child,
+  .data-table td:last-child {
     width: auto;
   }
 </style>

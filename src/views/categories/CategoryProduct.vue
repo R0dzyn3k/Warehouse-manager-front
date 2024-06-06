@@ -2,13 +2,11 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
-  import DeleteButton from '../../components/DeleteButton.vue';
-  import FormComponent from '../../components/FormComponent.vue';
-  import FormInput from '../../components/FormInput.vue';
+  import DataTable from '../../components/DataTable.vue';
 
   export default {
     name: 'CategoryEdit',
-    components: { FormInput, FormComponent, DeleteButton },
+    components: { DataTable },
     setup() {
       const category = ref({ categoryName: '' });
       const initialCategory = ref(null);
@@ -17,6 +15,15 @@
       const route = useRoute();
       const router = useRouter();
       const isEditMode = ref(false);
+
+      const columns = ref([
+        { key: 'productId', label: 'ID' },
+        { key: 'productName', label: 'Nazwa', to: '/products', id: 'productId' },
+        { key: 'categoryId', label: 'Id kategorii', to: '/categories', id: 'categoryId' },
+        { key: 'price', label: 'Cena' },
+        { key: 'stockQuantity', label: 'Na stanie' },
+        { key: 'empty', label: '' },
+      ]);
 
       const fetchCategory = async (id) => {
         loading.value = true;
@@ -42,7 +49,10 @@
         category,
         initialCategory,
         isEditMode,
-        router
+        router,
+        loading,
+        error,
+        columns,
       };
     },
   };
@@ -51,34 +61,8 @@
 <template>
   <div class="main-content">
     <div class="header">
-      <h1>{{ isEditMode ? 'Edytuj kategorię' : 'Dodaj kategorię' }}</h1>
-      <DeleteButton
-        v-if="isEditMode && category.categoryId"
-        :deleteUrl="`/api/categories/${category.categoryId}`"
-       redirect-url="/categories"/>
+      <h1>Produkty kategorii "{{ category.categoryName }}"</h1>
     </div>
-
-    <FormComponent
-      :initial-item="initialCategory"
-      :is-edit-mode="isEditMode"
-      :api-url="'/api/categories'"
-      :item="category"
-      :modelId="category.categoryId"
-      >
-    <template #form-fields="{ formRefs }">
-        <div class="form-grid">
-          <div class="full">
-            <FormInput
-              label="Nazwa"
-              field-id="categoryName"
-              field-name="categoryName"
-              v-model="category.categoryName"
-              :errors="formRefs['categoryName']"
-              required
-            />
-          </div>
-        </div>
-      </template>
-    </FormComponent>
+    <data-table :columns="columns" :rows="category.products" :loading="loading" :error="error" />
   </div>
 </template>

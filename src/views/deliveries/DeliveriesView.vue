@@ -2,34 +2,32 @@
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import DataTable from '@/components/DataTable.vue';
+  import AddButton from '../../components/AddButton.vue';
 
   export default {
     components: {
+      AddButton,
       DataTable,
     },
     setup() {
-      const products = ref([]);
+      const orders = ref([]);
       const loading = ref(false);
       const error = ref(null);
 
       const columns = ref([
-        { key: 'productId', label: 'ID' },
-        { key: 'productName', label: 'Nazwa', to: '/products', id: 'productId' },
-        { key: 'stockQuantity', label: 'Na stanie' },
-        { key: 'warningQuantity', label: 'Stan krytyczny' },
+        { key: 'deliveryId', label: 'ID', to: '/deliveries', id: 'deliveryId' },
+        { key: 'supplier.supplierName', label: 'Dostawca', to: '/suppliers', id: 'supplier.supplierId' },
+        { key: 'totalPrice', label: 'Cena' },
+        { key: 'deliveryDate', label: 'Data', date: true},
         { key: 'empty', label: '' },
       ]);
 
-      const fetchProducts = async () => {
+      const fetchOrders = async () => {
         loading.value = true;
 
         try {
-          const response = await axios.get('/api/products', {
-            params: {
-              onlyWarningQuantities: true
-            }}
-          );
-          products.value = response.data;
+          const response = await axios.get('/api/deliveries');
+          orders.value = response.data;
         } catch (err) {
           console.error('Error:', err);
           if (err.response) {
@@ -45,11 +43,11 @@
       };
 
       onMounted(() => {
-        fetchProducts();
+        fetchOrders();
       });
 
       return {
-        products: products,
+        orders,
         columns,
         loading,
         error,
@@ -61,10 +59,9 @@
 <template>
   <div class="main-content">
     <div class="header">
-      <h1>Podgląd</h1>
+      <h1>Dostawy</h1>
+      <AddButton :url="'/deliveries/new'" />
     </div>
-
-      <h2>Niskie staniy magazynowe</h2>
-    <data-table :columns="columns" :rows="products" :loading="loading" :error="error" />
+    <data-table :columns="columns" :rows="orders" :loading="loading" :error="error" />
   </div>
 </template>
