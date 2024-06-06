@@ -39,8 +39,6 @@
           link.click();
 
           document.body.removeChild(link);
-
-          console.log('Pobrano raport', fileName);
         } catch (error) {
           console.error('Nie udało się pobrać rekordu', error);
         }
